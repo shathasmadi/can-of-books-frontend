@@ -1,14 +1,17 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./header";
 import IsLoadingAndError from "./IsLoadingAndError";
 import Footer from "./Footer";
-import MyFavoriteBooks from "./MyFavoriteBooks";
-import Login from "./Login";
+import MyFavoriteBooks from "./myFavoriteBooks";
+import Login from "./login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { withAuth0 } from "@auth0/auth0-react";
+import profile from "./Profile";
 
 class App extends React.Component {
   render() {
     console.log("app", this.props);
+    const { isAuthenticated } = this.props.auth0;
     return (
       <>
         <Router>
@@ -32,4 +35,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);
