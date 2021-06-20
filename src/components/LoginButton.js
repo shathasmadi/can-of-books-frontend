@@ -10,7 +10,6 @@ const LoginButton = () => {
         float: "right",
         marginRight: "30px",
         marginTop: "10px",
-        border: "none",
         width: "100px",
         height: "30px",
         borderRadius: "3px",
