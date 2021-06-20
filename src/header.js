@@ -12,10 +12,14 @@ class Header extends React.Component {
   render() {
     const { isAuthenticated } = this.props.auth0;
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand>My Favorite Books</Navbar.Brand>
-        <Link to="/">Home</Link>
-        <Link to="/profile">Profile</Link>
+      <Navbar style={{ backgroundColor: "#845460", display: "block" }} collapseOnSelect expand="lg" variant="dark">
+        <Link style={{ color: "#E2BCB7", marginRight: "20px" }} to="/">
+          Home
+        </Link>
+        <Link style={{ color: "#E2BCB7" }} to="/profile">
+          Profile
+        </Link>
+        <Navbar.Brand style={{ color: "#E2BCB7", marginLeft: "35%" }}>My Favorite Books</Navbar.Brand>
         {/* TODO: if the user is logged in, render the `LogoutButton` - if the user is logged out, render the `LoginButton` */}
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </Navbar>
