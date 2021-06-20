@@ -6,7 +6,7 @@ import MyFavoriteBooks from "./myFavoriteBooks";
 import Login from "./login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { withAuth0 } from "@auth0/auth0-react";
-import profile from "./Profile";
+import Profile from "./components/Profile";
 
 class App extends React.Component {
   render() {
@@ -24,7 +24,7 @@ class App extends React.Component {
               </Route>
               {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
               <Route exact path="/profile">
-                <profile />
+                <Profile />
               </Route>
             </Switch>
             <Footer />
