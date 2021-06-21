@@ -7,20 +7,22 @@ export class Profile extends Component {
   render() {
     const { isAuthenticated } = this.props.auth0;
     return (
-      isAuthenticated && (
-        <Card text="white" className="text-center p-3" style={{ width: "25%", margin: "Auto", marginBottom: "30px" }}>
-          <Image
-            style={{ width: "100%" }}
-            src={this.props.auth0.user.picture}
-            alt={this.props.auth0.user.name}
-            rounded
-          />
-          <Card.Body>
-            <Card.Title style={{ color: "black" }}>{this.props.auth0.user.name}</Card.Title>
-            <Card.Text style={{ color: "black" }}>{this.props.auth0.user.email}</Card.Text>
-          </Card.Body>
-        </Card>
-      )
+      <div>
+        {isAuthenticated && (
+          <Card text="white" className="text-center p-3" style={{ width: "25%", margin: "Auto", marginBottom: "30px" }}>
+            <Image
+              style={{ width: "100%" }}
+              src={this.props.auth0.user.picture}
+              alt={this.props.auth0.user.name}
+              rounded
+            />
+            <Card.Body>
+              <Card.Title style={{ color: "black" }}>{this.props.auth0.user.name}</Card.Title>
+              <Card.Text style={{ color: "black" }}>{this.props.auth0.user.email}</Card.Text>
+            </Card.Body>
+          </Card>
+        )}
+      </div>
     );
   }
 }
