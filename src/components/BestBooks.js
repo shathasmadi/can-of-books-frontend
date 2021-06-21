@@ -22,7 +22,7 @@ class MyFavoriteBooks extends React.Component {
         const myBooks = `${process.env.REACT_APP_SERVER_URL}/books?email=${user.email}`;
         const showApiUrlbook = await axios.get(myBooks);
         console.log('hhhhhhhhhhhhhh');
-        this.setState({ book: showApiUrlbook.data });
+        this.setState({ book: showApiUrlbook.data[0].book });
       }
       render() {
 
