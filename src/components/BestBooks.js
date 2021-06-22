@@ -1,11 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import './BestBooks.css';
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import FormBooks from './FormBooks';
+import BookFormModal from './BookFormModal';
+import Button from 'react-bootstrap/Button';
+
 
 
 
@@ -76,10 +79,24 @@ class BestBooks extends React.Component {
     })
   }
 
+  deleteBook = async (index) => {
+    const newArrayOfBooks = this.state.book.filter((cat, idx) => {
+      return idx !== index;
+    });
+    this.setState({
+      book: newArrayOfBooks
+    })
+
+    const query = {
+      email: this.props.auth0.user.email
+    }
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/books/${index}`, { params: query })
+  }
+
   render() {
 
     return (
-     
+  
 
       <Jumbotron   >
         <h1>My Favorite Books</h1>
@@ -87,7 +104,7 @@ class BestBooks extends React.Component {
           This is a collection of my favorite books
         </p>
 
-        <FormBooks
+        <BookFormModal
           addBook={this.addBook}
 
           updateBookName={this.updateBookName}
@@ -96,20 +113,28 @@ class BestBooks extends React.Component {
         />
 
         {
-          this.state.book.map(element => {
-            return <Card style={{ width: '18rem' }}>
-              <ListGroup variant="flush">
-                <ListGroup.Item as="li" active>book Name:
+          this.state.book.map((element, indx) => {
+            return (
+              <>
+                <Card style={{ width: '18rem', margin:'26px auto' }}>
+                <ListGroup variant="flush">
+                  <ListGroup.Item as="li">Book Name:
                 {element.name}</ListGroup.Item>
-                <ListGroup.Item>description: {element.description}</ListGroup.Item>
-                <ListGroup.Item>status: {element.status}</ListGroup.Item>
-              </ListGroup>  </Card>;
-          })
-        }
+                  <ListGroup.Item>Description: {element.description}</ListGroup.Item>
+                  <ListGroup.Item>Status: {element.status}</ListGroup.Item>
+                </ListGroup>
+                
+                <Button  className='m-3 btn btn-danger'  onClick={() => this.deleteBook(indx)}>Delete Book</Button>
+                
+              </Card>;
+              </>
+    )
+  })
+}
 
 
       </Jumbotron >
-   
+  
     );
 
   }
