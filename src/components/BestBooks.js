@@ -61,14 +61,8 @@ class BestBooks extends React.Component {
   bookName;
 
   showUpdateForm = (idx) => {
-    // const newBook = this.state.books.filter((value, index) => {
-    //   return idx === index;
-    // });
     this.setState({
       index: idx,
-      // name: newBook[0].name,
-      // status: newBook[0].status,
-      // description: newBook[0].description,
       showUpdate: !this.state.showUpdate,
     });
   };
@@ -82,13 +76,11 @@ class BestBooks extends React.Component {
       email: this.props.auth0.user.email,
     };
     console.log(reqBody);
-    const newBook = await axios
-      .put(`${process.env.REACT_APP_SERVER_URL}/book/${this.state.index}`, reqBody)
-      .then((response) => {
-        this.setState({
-          book: response.data.books,
-        });
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/book/${this.state.index}`, reqBody).then((response) => {
+      this.setState({
+        book: response.data.books,
       });
+    });
   };
 
   render() {
