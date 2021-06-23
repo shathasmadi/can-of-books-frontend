@@ -26,9 +26,11 @@ class BestBooks extends React.Component {
     const showApiUrlBook = await axios.get(myBooks);
     this.setState({ book: showApiUrlBook.data.books });
   };
+
   updateBookName = (e) => this.setState({ name: e.target.value });
   updateDiscOfBook = (e) => this.setState({ description: e.target.value });
   updateStatusOfBook = (e) => this.setState({ status: e.target.value });
+
   addBook = async (e) => {
     e.preventDefault();
     const bodyData = {
@@ -43,6 +45,7 @@ class BestBooks extends React.Component {
       });
     });
   };
+
   deleteBook = async (index) => {
     const query = {
       email: this.props.auth0.user.email,
@@ -55,31 +58,39 @@ class BestBooks extends React.Component {
         });
       });
   };
+  bookName;
+
+  showUpdateForm = (idx) => {
+    // const newBook = this.state.books.filter((value, index) => {
+    //   return idx === index;
+    // });
+    this.setState({
+      index: idx,
+      // name: newBook[0].name,
+      // status: newBook[0].status,
+      // description: newBook[0].description,
+      showUpdate: !this.state.showUpdate,
+    });
+  };
+
   update = async (e) => {
     e.preventDefault();
     const reqBody = {
-      name: this.state.name,
-      status: this.state.status,
-      description: this.state.description,
+      bookName: this.state.name,
+      bookStatus: this.state.status,
+      bookDescription: this.state.description,
       email: this.props.auth0.user.email,
     };
-    const newBook = await axios.put(`${process.env.REACT_APP_SERVER_URL}/book/${this.state.index}`, reqBody); //put to update// send data to server
-    this.setState({
-      book: newBook.data.books,
-    });
+    console.log(reqBody);
+    const newBook = await axios
+      .put(`${process.env.REACT_APP_SERVER_URL}/book/${this.state.index}`, reqBody)
+      .then((response) => {
+        this.setState({
+          book: response.data.books,
+        });
+      });
   };
-  showUpdateForm = (idx) => {
-    const newBook = this.state.books.filter((value, index) => {
-      return idx === index;
-    });
-    this.setState({
-      index: idx,
-      name: newBook[0].name,
-      status: newBook[0].status,
-      description: newBook[0].description,
-      showUpdate: true,
-    });
-  };
+
   render() {
     return (
       <Jumbotron>
@@ -89,6 +100,17 @@ class BestBooks extends React.Component {
           updateDiscOfBook={this.updateDiscOfBook}
           updateStatusOfBook={this.updateStatusOfBook}
         />
+        {this.state.showUpdate && (
+          <UpdateForm
+            update={this.update}
+            name={this.state.name}
+            description={this.state.description}
+            status={this.state.status}
+            updateBookName={this.updateBookName}
+            updateDiscOfBook={this.updateDiscOfBook}
+            updateStatusOfBook={this.updateStatusOfBook}
+          />
+        )}
         {this.state.book.map((element, indx) => {
           return (
             <>
@@ -112,17 +134,6 @@ class BestBooks extends React.Component {
             </>
           );
         })}
-        {this.state.showUpdate && (
-          <UpdateForm
-            update={this.update}
-            name={this.state.name}
-            description={this.state.description}
-            status={this.state.status}
-            updateBookName={this.updateBookName}
-            updateDiscOfBook={this.updateDiscOfBook}
-            updateStatusOfBook={this.updateStatusOfBook}
-          />
-        )}
       </Jumbotron>
     );
   }
