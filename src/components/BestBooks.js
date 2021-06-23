@@ -7,8 +7,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import FormBooks from "./FormBooks";
 import Button from "react-bootstrap/Button";
-import UpdateForm from './UpdateForm';
-
+import UpdateForm from "./UpdateForm";
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +20,6 @@ class BestBooks extends React.Component {
       index: 0,
     };
   }
-
   componentDidMount = async () => {
     const { user } = this.props.auth0;
     const myBooks = `${process.env.REACT_APP_SERVER_URL}/books?email=${user.email}`;
@@ -35,14 +33,12 @@ class BestBooks extends React.Component {
 
   addBook = async (e) => {
     e.preventDefault();
-
     const bodyData = {
       bookName: this.state.name,
       bookDescription: this.state.description,
       bookStatus: this.state.status,
       email: this.props.auth0.user.email,
     };
-
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/book`, bodyData).then((Response) => {
       this.setState({
         book: Response.data.books,
@@ -62,42 +58,31 @@ class BestBooks extends React.Component {
         });
       });
   };
+  bookName;
+
+  showUpdateForm = (idx) => {
+    this.setState({
+      index: idx,
+      showUpdate: !this.state.showUpdate,
+    });
+  };
 
   update = async (e) => {
     e.preventDefault();
     const reqBody = {
-      name: this.state.name,
-      status: this.state.status,
-      description: this.state.description,
-      email: this.props.auth0.user.email
-    }
-    const newBook = await axios.put(`${process.env.REACT_APP_HOST}/book/${this.state.index}`, reqBody); //put to update// send data to server
-
-    this.setState({
-      book: newBook.data.books,
-    })
-
-  }
-
-
-  showUpdateForm = (idx) => {
-
-    const newBook = this.state.books.filter((value, index) => {
-      return idx === index;
-
+      bookName: this.state.name,
+      bookStatus: this.state.status,
+      bookDescription: this.state.description,
+      email: this.props.auth0.user.email,
+    };
+    console.log(reqBody);
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/book/${this.state.index}`, reqBody).then((response) => {
+      this.setState({
+        book: response.data.books,
+      });
     });
+  };
 
-
-    this.setState({
-      index: idx,
-      name: newBook[0].name,
-      status: newBook[0].status,
-      description: newBook[0].description,
-      showUpdate: true
-    });
-  }
-
- 
   render() {
     return (
       <Jumbotron>
@@ -107,7 +92,17 @@ class BestBooks extends React.Component {
           updateDiscOfBook={this.updateDiscOfBook}
           updateStatusOfBook={this.updateStatusOfBook}
         />
-
+        {this.state.showUpdate && (
+          <UpdateForm
+            update={this.update}
+            name={this.state.name}
+            description={this.state.description}
+            status={this.state.status}
+            updateBookName={this.updateBookName}
+            updateDiscOfBook={this.updateDiscOfBook}
+            updateStatusOfBook={this.updateStatusOfBook}
+          />
+        )}
         {this.state.book.map((element, indx) => {
           return (
             <>
@@ -120,31 +115,19 @@ class BestBooks extends React.Component {
                   <ListGroup.Item>Description: {element.description}</ListGroup.Item>
                   <ListGroup.Item>Status: {element.status}</ListGroup.Item>
                 </ListGroup>
-
                 <Button className="m-3 btn btn-danger" onClick={() => this.deleteBook(indx)}>
                   Delete Book
                 </Button>
-                <Button className='m-3' onClick={() => this.showUpdateForm(indx)}>Update Book</Button>
+                <Button className="m-3" onClick={() => this.showUpdateForm(indx)}>
+                  Update Book
+                </Button>
               </Card>
               ;
             </>
           );
         })}
-        {this.state.showUpdate &&
-          <UpdateForm
-
-            update={this.update}
-            name={this.state.name}
-            description={this.state.description}
-            status={this.state.status}
-            updateBookName={this.updateBookName}
-            updateDiscOfBook={this.updateDiscOfBook}
-            updateStatusOfBook={this.updateStatusOfBook}
-
-          />}
       </Jumbotron>
     );
   }
 }
-
 export default withAuth0(BestBooks);
