@@ -6,12 +6,12 @@ class Footer extends React.Component {
   render() {
     return (
       <Navbar
-        style={{ backgroundColor: "#845460", display: "block", textAlign: "center" }}
+        style={{ backgroundColor: "#A7C4BC", display: "block", textAlign: "center" }}
         collapseOnSelect
         expand="lg"
         variant="dark"
       >
-        <Navbar.Brand style={{ color: "#E2BCB7" }}>&copy; Best Books</Navbar.Brand>
+        <Navbar.Brand style={{ color: "#2F5D62" }}>&copy; Best Books</Navbar.Brand>
       </Navbar>
     );
   }

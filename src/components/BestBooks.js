@@ -55,10 +55,10 @@ class BestBooks extends React.Component {
       .then((res) => {
         this.setState({
           book: res.data.books,
+          showUpdate: false,
         });
       });
   };
-  bookName;
 
   showUpdateForm = (idx) => {
     this.setState({
@@ -85,7 +85,7 @@ class BestBooks extends React.Component {
 
   render() {
     return (
-      <Jumbotron>
+      <Jumbotron style={{ backgroundColor: "#DFEEEA" }}>
         <FormBooks
           addBook={this.addBook}
           updateBookName={this.updateBookName}
@@ -95,37 +95,43 @@ class BestBooks extends React.Component {
         {this.state.showUpdate && (
           <UpdateForm
             update={this.update}
-            name={this.state.name}
-            description={this.state.description}
-            status={this.state.status}
             updateBookName={this.updateBookName}
             updateDiscOfBook={this.updateDiscOfBook}
             updateStatusOfBook={this.updateStatusOfBook}
           />
         )}
-        {this.state.book.map((element, indx) => {
-          return (
-            <>
-              <Card style={{ width: "18rem", margin: "26px auto" }}>
-                <ListGroup variant="flush">
-                  <ListGroup.Item as="li">
-                    Book Name:
-                    {element.name}
-                  </ListGroup.Item>
-                  <ListGroup.Item>Description: {element.description}</ListGroup.Item>
-                  <ListGroup.Item>Status: {element.status}</ListGroup.Item>
-                </ListGroup>
-                <Button className="m-3 btn btn-danger" onClick={() => this.deleteBook(indx)}>
-                  Delete Book
-                </Button>
-                <Button className="m-3" onClick={() => this.showUpdateForm(indx)}>
-                  Update Book
-                </Button>
-              </Card>
-              ;
-            </>
-          );
-        })}
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {this.state.book.map((element, indx) => {
+            return (
+              <>
+                <Card style={{ width: "18rem", margin: "26px auto" }}>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item as="li">
+                      Book Name:
+                      {element.name}
+                    </ListGroup.Item>
+                    <ListGroup.Item>Description: {element.description}</ListGroup.Item>
+                    <ListGroup.Item>Status: {element.status}</ListGroup.Item>
+                  </ListGroup>
+                  <Button
+                    className="m-3 btn btn-danger"
+                    onClick={() => this.deleteBook(indx)}
+                    style={{ backgroundColor: "#2F5D62", color: "white", border: "none" }}
+                  >
+                    Delete Book
+                  </Button>
+                  <Button
+                    className="m-3"
+                    onClick={() => this.showUpdateForm(indx)}
+                    style={{ backgroundColor: "#5E8B7E", color: "white", border: "none" }}
+                  >
+                    Update Book
+                  </Button>
+                </Card>
+              </>
+            );
+          })}
+        </div>
       </Jumbotron>
     );
   }

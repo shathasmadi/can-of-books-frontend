@@ -7,9 +7,19 @@ export class Profile extends Component {
   render() {
     const { isAuthenticated } = this.props.auth0;
     return (
-      <div>
+      <div style={{ backgroundColor: "#DFEEEA" }}>
         {isAuthenticated && (
-          <Card text="white" className="text-center p-3" style={{ width: "25%", margin: "Auto", marginBottom: "30px" }}>
+          <Card
+            text="white"
+            className="text-center p-3"
+            style={{
+              width: "25%",
+              margin: "Auto",
+              marginBottom: "30px",
+              marginTop: "30px",
+              backgroundColor: "#A7C4BC",
+            }}
+          >
             <Image
               style={{ width: "100%" }}
               src={this.props.auth0.user.picture}
