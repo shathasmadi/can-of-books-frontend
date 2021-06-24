@@ -1,26 +1,48 @@
 import React, { Component } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export class FormBooks extends Component {
   render() {
     return (
-      <div>
-        <form onSubmit={(e) => this.props.addBook(e)} style={{ marginBottom: "20px" }}>
-          <label style={{ marginLeft: "20px", marginRight: "5px" }}>Name of the Book</label>
-          <input onChange={this.props.updateBookName} type="text" />
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Add a new book</Modal.Title>
+        </Modal.Header>
 
-          <label style={{ marginLeft: "20px", marginRight: "5px" }}>Description of the Book</label>
-          <input onChange={this.props.updateDiscOfBook} type="text" />
+        <Modal.Body>
+          <form style={{ marginBottom: "20px", textAlign: "center" }}>
+            <label style={{ marginLeft: "20px", marginRight: "5px" }}>Name of the Book</label>
+            <input onChange={this.props.updateBookName} type="text" />
 
-          <label style={{ marginLeft: "20px", marginRight: "5px" }}>Status of the Book</label>
-          <input onChange={this.props.updateStatusOfBook} type="text" />
+            <label style={{ marginLeft: "20px", marginRight: "5px" }}>Description of the Book</label>
+            <input onChange={this.props.updateDiscOfBook} type="text" />
 
-          <input
-            type="submit"
-            value="Add New Book"
-            style={{ marginLeft: "20px", backgroundColor: "#5E8B7E", color: "white", border: "none" }}
-          />
-        </form>
-      </div>
+            <label style={{ marginLeft: "20px", marginRight: "5px" }}>Status of the Book</label>
+            <input onChange={this.props.updateStatusOfBook} type="text" />
+          </form>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button onClick={this.props.closeAddBookForm} variant="secondary">
+            Close
+          </Button>
+          <Button
+            onClick={(e) => {
+              this.props.addBook(e);
+              this.props.closeAddBookForm();
+            }}
+            style={{
+              marginLeft: "20px",
+              backgroundColor: "#5E8B7E",
+              color: "white",
+              border: "none",
+            }}
+          >
+            Add New Book
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
     );
   }
 }

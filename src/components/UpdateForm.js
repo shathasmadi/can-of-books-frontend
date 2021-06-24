@@ -7,13 +7,21 @@ export class UpdateForm extends Component {
         <form onSubmit={(e) => this.props.update(e)}>
           <fieldset>
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Name of the Book</label>
-            <input onChange={(e) => this.props.updateBookName(e)} type="text" />
+            <input defaultValue={this.props.book.name} onChange={(e) => this.props.updateBookName(e)} type="text" />
 
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Description of the Book</label>
-            <input onChange={(e) => this.props.updateDiscOfBook(e)} type="text" />
+            <input
+              defaultValue={this.props.book.description}
+              onChange={(e) => this.props.updateDiscOfBook(e)}
+              type="text"
+            />
 
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Status of the Book</label>
-            <input onChange={(e) => this.props.updateStatusOfBook(e)} type="text" />
+            <input
+              defaultValue={this.props.book.status}
+              onChange={(e) => this.props.updateStatusOfBook(e)}
+              type="text"
+            />
 
             <input
               type="submit"
