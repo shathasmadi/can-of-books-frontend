@@ -12,6 +12,7 @@ class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showAddBookForme: false,
       book: [],
       name: "",
       description: "",
@@ -20,6 +21,14 @@ class BestBooks extends React.Component {
       index: 0,
     };
   }
+
+  showAddBookForme = () => {
+    this.setState({ showAddBookForme: !this.state.showAddBookForme, showUpdate: false });
+  };
+  closeAddBookForm = () => {
+    this.setState({ showAddBookForme: false, showUpdate: false });
+  };
+
   componentDidMount = async () => {
     const { user } = this.props.auth0;
     const myBooks = `${process.env.REACT_APP_SERVER_URL}/books?email=${user.email}`;
@@ -86,18 +95,28 @@ class BestBooks extends React.Component {
   render() {
     return (
       <Jumbotron style={{ backgroundColor: "#DFEEEA" }}>
-        <FormBooks
-          addBook={this.addBook}
-          updateBookName={this.updateBookName}
-          updateDiscOfBook={this.updateDiscOfBook}
-          updateStatusOfBook={this.updateStatusOfBook}
-        />
+        <Button
+          onClick={this.showAddBookForme}
+          style={{ marginBottom: "30px", backgroundColor: "#5E8B7E", color: "white", border: "none" }}
+        >
+          ADD A NEW BOOK
+        </Button>
+        {this.state.showAddBookForme && (
+          <FormBooks
+            closeAddBookForm={this.closeAddBookForm}
+            addBook={this.addBook}
+            updateBookName={this.updateBookName}
+            updateDiscOfBook={this.updateDiscOfBook}
+            updateStatusOfBook={this.updateStatusOfBook}
+          />
+        )}
         {this.state.showUpdate && (
           <UpdateForm
             update={this.update}
             updateBookName={this.updateBookName}
             updateDiscOfBook={this.updateDiscOfBook}
             updateStatusOfBook={this.updateStatusOfBook}
+            book={this.state.book[this.state.index]}
           />
         )}
         <div style={{ display: "flex", flexWrap: "wrap" }}>
