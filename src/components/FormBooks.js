@@ -11,15 +11,15 @@ export class FormBooks extends Component {
         </Modal.Header>
 
         <Modal.Body>
-          <form style={{ marginBottom: "20px", textAlign: "center" }}>
+          <form style={{ marginBottom: "20px", }}>
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Name of the Book</label>
-            <input onChange={this.props.updateBookName} type="text" />
+            <input onChange={this.props.updateBookName} type="text"style={{marginLeft:"50px"}}/>
 
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Description of the Book</label>
-            <input onChange={this.props.updateDiscOfBook} type="text" />
+            <input onChange={this.props.updateDiscOfBook} type="text"style={{marginLeft:"12px"}} />
 
             <label style={{ marginLeft: "20px", marginRight: "5px" }}>Status of the Book</label>
-            <input onChange={this.props.updateStatusOfBook} type="text" />
+            <input onChange={this.props.updateStatusOfBook} type="text"style={{marginLeft:"50px"}} />
           </form>
         </Modal.Body>
 
